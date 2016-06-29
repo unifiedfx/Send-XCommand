@@ -1,4 +1,4 @@
-# CommandFX
+# Send-XCommand
 Powershell Cmdlet 'Send-XCommand' for sending xConfiguraiton &amp; xCommand to Cisco TelePresence Endpoints i.e. DX70 &amp; DX80
 
 Cisco TelePresence endpoints run Collaboration Endpoint (CE) operating system and provide an PushXML API to update the configuration of the endpoint as well as send commands for remote operation of the device. This script is used to execute xCommands on one or more Cisco TelePresence endpoints using HTTP.
