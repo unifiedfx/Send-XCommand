@@ -3,7 +3,7 @@ Powershell Cmdlet 'Send-XCommand' for sending xConfiguraiton &amp; xCommand to C
 
 Cisco TelePresence endpoints run Collaboration Endpoint (CE) operating system and provide an PushXML API to update the configuration of the endpoint as well as send commands for remote operation of the device. This script is used to execute xCommands on one or more Cisco TelePresence endpoints using HTTP.
 
-The script is published on the [Powershell Gallery](https://www.powershellgallery.com/packages/Send-XCommand) and can be easily installed on any Windows machine with one of the followng pre-requisites:
+The script is published on the [Powershell Gallery](https://www.powershellgallery.com/packages/Send-XCommand) and can be easily installed on any Windows machine with **ONE** of the followng pre-requisites:
 
 * Windows 10
 * [Windows Management Foundation 5.0](https://www.microsoft.com/en-us/download/details.aspx?id=50395)
@@ -58,4 +58,16 @@ Send-XCommand "10.40.0.19" "xCommand SystemUnit Boot Action: Restart"
 ```
 
 ## Converting DX70 & DX80 from Android to CE
-[UnifiedFX](http://www.unifiedfx.com) provide the ability to migrate the device configuration in CUCM taking care of converting all the complex device settings from the Cisco DX to Cisco TelePresence DX model types. Two UnifiedFX products [MigrationDX](http://www.unifiedfx.com/migrationdx) & [MigrationFX](http://www.unifiedfx.com/migrationfx) and greatly simplify the migration from one device/model to another. MigrationDX is only for converting DX endpoints to/from Android/CE, MigrationFX includes the capability of MigrationDX but can also be used to replace and/or provision standard Cisco IP desk phones (i.e. replace a Cisco 7940 with a Cisco 8841).
+[UnifiedFX](http://www.unifiedfx.com) provide the ability to migrate the device configuration in CUCM taking care of converting all the complex device settings from the Cisco DX to Cisco TelePresence DX model types. Two UnifiedFX products [MigrationDX](http://www.unifiedfx.com/migrationdx) & [MigrationFX](http://www.unifiedfx.com/migrationfx) greatly simplify the migration from one device/model to another. MigrationDX is only for converting DX endpoints to/from Android/CE, MigrationFX includes the capability of MigrationDX but can also be used to replace and/or provision standard Cisco IP desk phones (i.e. replace a Cisco 7940 with a Cisco 8841).
+
+## Setting Service Mode on multiple devices
+Using [MigrationDX](http://www.unifiedfx.com/migrationdx) you can export a CSV file from the 'Phones' page that includes the last seen IP Address of the DX endpoints. You can use the following Powershell commands to set the service mode in bulk, which will allow the endpoints to attempt re-register with CUCM without having to visit the device. Once the endpoints attempt to re-register you will typically see 'Model Mismatch' within the 'Phones' page of [MigrationDX](http://www.unifiedfx.com/migrationdx), at that point you can use [MigrationDX](http://www.unifiedfx.com/migrationdx) to convert the model type from 'Cisco DX' to 'Cisco TelePresence DX' enabling the newly converted endpoints to register with the new model type.
+
+```
+$devices = import-csv -Path "Phone List.csv"
+$devices."IP Address" | ?{$_} | %{
+Send-XCommand $_ "xConfiguration Experimental SystemUnit RunStartupWizard : false"
+Send-XCommand $_ "xConfiguration Provisioning Mode: CUCM"
+Send-XCommand $_ "xCommand SystemUnit Boot Action: Restart"
+}
+```
