@@ -7,7 +7,7 @@
 .COPYRIGHT 2016 UnifiedFX. All rights reserved.
 .TAGS Cisco Collaboration UnifiedFX xCommand xConfiguration
 .LICENSEURI https://opensource.org/licenses/MIT
-.PROJECTURI https://github.com/unifiedfx/CommandFX
+.PROJECTURI https://github.com/unifiedfx/Send-XCommand
 .ICONURI http://www.unifiedfx.com/logo.png 
 .RELEASENOTES 
 V0.1 Initial publication 
@@ -18,9 +18,9 @@ V0.1 Initial publication
    Send xConfiguraiton & xCommand to Cisco TelePresence Endpoints i.e. DX70 & DX80
 
 .DESCRIPTION 
-   Cisco TelePresence endpoints run Collaboration Endpoint (CE) operating system and provide an PushXML API to upate
-   the configuration of the endpoint as well as send commands for remote operation of the device.
-   If no username/password is specified the defaul 'admin/<blank>' is used
+   Cisco TelePresence endpoints run Collaboration Endpoint (CE) operating system and provide an PushXML API to update
+   the configuration of the endpoint as well as sending commands for remote operation of the device.
+   If no username/password is specified the default 'admin/<blank>' is used
 
 .PARAMETER IPAddress
    The IP Address of the Cisco TelePresence Endpoint
